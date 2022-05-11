@@ -104,7 +104,7 @@ def InvoerBox():
                     value=21.00, min_value=0.10, max_value=999.00)
     # Percentage ondergronds
     with st.expander("Hulp percentage ondergronds"):
-        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DiaDuiker.jpg'),
+        st.image(Image.open('DiaDuiker.jpg'),
                  caption='Dia Duiker')
     PerOndergrond = st.number_input(label='Percentage ondergronds',format="%.2f",
                     value= 0.10, min_value=0.00, max_value=diameter)
@@ -112,7 +112,7 @@ def InvoerBox():
     with st.expander("Hulp intreedweerstand"):
         st.write('Gebuik onderstaand figuur voor het bepalen van de intreedweerstand')
         st.write('Standaardwaarde = 0.4')
-        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/EiWaardes.jpg'),
+        st.image(Image.open('EiWaardes.jpg'),
                  caption='Ei-waarden')
     intreedweerstand = st.number_input(label='Intreedweerstand [dimensieloos]',
                                        format="%.2f",value= 0.40)
@@ -130,7 +130,7 @@ def InvoerBox():
     with st.expander("Hulp hydraulische weerstand"):
         st.write('Hydraulische weerstand wordt in Manning uitgedrukt')
         st.write('Gebuik onderstaand tabel voor het bepalen van de hydraulische weerstand')
-        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg'),
+        st.image(Image.open('kWaardem.jpg'),
                  caption='k-Waardem')
     Manning = st.number_input(label='Manning [s∙m ^-1/3]',step=0.1,format="%.2f",
                     value= 75.00)
