@@ -87,7 +87,7 @@ class DuikerTool:
         return stroomsnelheid
 
 # =============================================================================
-# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220510C.py
+# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220511.py
 # =============================================================================
 
 ## GUI
@@ -104,7 +104,7 @@ def InvoerBox():
                     value=21.00, min_value=0.10, max_value=999.00)
     # Percentage ondergronds
     with st.expander("Hulp percentage ondergronds"):
-        st.image(Image.open('DiaDuiker.jpg'),
+        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DiaDuiker.jpg'),
                  caption='Dia Duiker')
     PerOndergrond = st.number_input(label='Percentage ondergronds',format="%.2f",
                     value= 0.10, min_value=0.00, max_value=diameter)
@@ -112,7 +112,7 @@ def InvoerBox():
     with st.expander("Hulp intreedweerstand"):
         st.write('Gebuik onderstaand figuur voor het bepalen van de intreedweerstand')
         st.write('Standaardwaarde = 0.4')
-        st.image(Image.open('EiWaardes.jpg'),
+        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/EiWaardes.jpg'),
                  caption='Ei-waarden')
     intreedweerstand = st.number_input(label='Intreedweerstand [dimensieloos]',
                                        format="%.2f",value= 0.40)
@@ -130,7 +130,7 @@ def InvoerBox():
     with st.expander("Hulp hydraulische weerstand"):
         st.write('Hydraulische weerstand wordt in Manning uitgedrukt')
         st.write('Gebuik onderstaand tabel voor het bepalen van de hydraulische weerstand')
-        st.image(Image.open('kWaardem.jpg'),
+        st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg'),
                  caption='k-Waardem')
     Manning = st.number_input(label='Manning [s∙m ^-1/3]',step=0.1,format="%.2f",
                     value= 75.00)
@@ -138,13 +138,15 @@ def InvoerBox():
     bovenwaterstand = st.number_input(label='Bovenwaterstand',step=0.1,format="%.2f",
                     value= 0.05)
     # Benedenwaterstand
-    benedenwaterstand = st.number_input(label='Benedenwaterstand',step=0.1,format="%.2f",
-                    value= 0.00)
+    benedenwaterstand = st.number_input(label='Benedenwaterstand',format="%.2f",
+                    value= 0.00, min_value=0.00, max_value=bovenwaterstand)
     return diameter,lengte,PerOndergrond,intreedweerstand,uittreedweerstand,BenStrNatOpp,Manning,bovenwaterstand,benedenwaterstand
 
 ## Layout:
 # ===================================
-st.image(Image.open('WRIJ_Sweco.jpg'))
+st.markdown("<h1 style='text-align: right; color: black; font-size:10px;'>Geproduceerd door: Niels van der Maaden</h1>", unsafe_allow_html=True)
+#st.write('Geproduceerd door: Niels van der Maaden')
+st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/WRIJ_Sweco.jpg'))
 st.markdown('##')
 st.title('Duiker tool')
 #st.markdown('##')
@@ -157,19 +159,8 @@ with st.sidebar:
 ## Output:
 # ===================================    
 with st.container():   
-    st.markdown("""<style>
-                .big-font {
-                    font-size:30px !important;
-                }
-                </style>""", unsafe_allow_html=True)
-    
-    st.markdown('<p class="big-font">Resultaten:</p>', unsafe_allow_html=True)
-    st.markdown(f'<p class="big-font">Debiet: {round(duiker.Debiet(),3)} [m3/s]</p>', unsafe_allow_html=True)
-    st.markdown(f'<p class="big-font">Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</p>', unsafe_allow_html=True)
-    st.markdown(f'<p class="big-font">Opstuwing: {round(duiker.Opstuwing(),2)} [m]</p>', unsafe_allow_html=True)
-    st.markdown(f'<p class="big-font">Hydraulische ruwheid: {round(duiker.Ruw(),3)}</p>', unsafe_allow_html=True)
-
-    
-    
-
-
+    st.markdown("<h1 style='text-align: left; color: black; font-size:30px;'>Resultaten</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.Debiet(),3)} [m3/s]</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.Opstuwing(),2)} [m]</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.Ruw(),3)}</h1>", unsafe_allow_html=True)
