@@ -144,7 +144,7 @@ def InvoerBox():
 
 ## Layout:
 # ===================================
-st.image(Image.open('/WRIJ_Sweco.jpg'))
+st.image(Image.open('WRIJ_Sweco.jpg'))
 st.markdown('##')
 st.title('Duiker tool')
 #st.markdown('##')
