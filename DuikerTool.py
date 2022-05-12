@@ -104,14 +104,23 @@ def InvoerBox():
                     value=21.00, min_value=0.10, max_value=999.00)
     # Percentage ondergronds
     with st.expander("Percentage ondergronds"):
-        KeuzePerOndergrond = st.selectbox('Keuze: wilt u hulp?', 
+        KeuzePerOndergrond1 = st.selectbox('Keuze: wilt u hulp?', 
                                           options = ('Ja','Nee'), index=1,
-                                          key = 'PerOndergrond')
-        if KeuzePerOndergrond == 'Ja':
-            st.image(Image.open('DiaDuiker.jpg'),
+                                          key = 'PerOndergrond1')
+        if KeuzePerOndergrond1 == 'Ja':
+            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DiaDuiker.jpg'),
                      caption='Dia Duiker')
-        PerOndergrond = st.number_input(label='Percentage ondergronds',format="%.2f",
-                        value= 0.10, min_value=0.00, max_value=diameter)
+        KeuzePerOndergrond2 = st.selectbox('Keuze: cm sliblaag in duiker of percentage ondergronds?', 
+                                          options = ('cm sliblaag','Percentage ondergronds'), 
+                                          index=1, key = 'PerOndergrond2')
+        if KeuzePerOndergrond2 == 'Percentage ondergronds':
+            PerOndergrond1 = st.number_input(label='Percentage ondergronds [%]',
+                            value= 0, min_value=0, max_value=100)
+            PerOndergrond = PerOndergrond1/100
+        elif KeuzePerOndergrond2 == 'cm sliblaag':
+            cmOndergrond = st.number_input(label='cm sliblaag [cm]',format="%.2f",
+                            value= 0.05, min_value=0.00, max_value=diameter)
+            PerOndergrond = cmOndergrond/diameter
     # Intreedweerstand
     with st.expander("In- en uitreedweerstand"):
         Keuzeweerstand = st.selectbox('Keuze: wilt u hulp?', 
@@ -120,7 +129,7 @@ def InvoerBox():
         if Keuzeweerstand == 'Ja':
             st.write('Gebuik onderstaand figuur voor het bepalen van de intreedweerstand')
             st.write('Standaardwaarde intreedweerstand = 0.4')
-            st.image(Image.open('EiWaardes.jpg'),
+            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/EiWaardes.jpg'),
                      caption='Ei-waarden')
             st.write('Standaardwaarde uitreedweerstand = 1.0')
         intreedweerstand = st.number_input(label='Intreedweerstand [dimensieloos]',
@@ -144,26 +153,27 @@ def InvoerBox():
         if KeuzeManning == 'Ja':
             st.write('Hydraulische weerstand wordt in Manning uitgedrukt')
             st.write('Gebuik onderstaand tabel voor het bepalen van de hydraulische weerstand')
-            st.image(Image.open('kWaardem.jpg'),
+            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg'),
                      caption='k-Waardem')
-        Manning = st.number_input(label='Manning [s∙m ^-1/3]',format="%.2f",
-                value= 75.00)
+        Manning = st.number_input(label='Manning [s∙m ^-1/3]',
+                value= 75)
     with st.expander("Verhang over duiker"):
         KeuzeVerhang = st.selectbox('Keuze: verhang of hoogte in +mNAP', 
                                     options = ('Verval','Werkelijke hoogte in +mNAP'))
         if KeuzeVerhang == 'Verval':
             # Verval
-            verval = st.number_input(label='Verval [m]',format="%.3f",
-                            value= 0.05)
+            verval_cm = st.number_input(label='Verval [cm]',format="%.1f",
+                            value= 5.00)
+            verval = verval_cm / 100
             # Boven- en benedenwaterstand
             benedenwaterstand = 0
             bovenwaterstand = verval
         elif KeuzeVerhang == 'Werkelijke hoogte in +mNAP':
             # Bovenwaterstand
-            bovenwaterstand = st.number_input(label='Bovenwaterstand',format="%.3f",
+            bovenwaterstand = st.number_input(label='Bovenwaterstand [+mNAP]',format="%.2f",
                             value= 0.05)
             # Benedenwaterstand
-            benedenwaterstand = st.number_input(label='Benedenwaterstand',format="%.3f",
+            benedenwaterstand = st.number_input(label='Benedenwaterstand [+mNAP]',format="%.2f",
                             value= 0.00, min_value=0.00, max_value=bovenwaterstand)          
     return diameter,lengte,PerOndergrond,intreedweerstand,uittreedweerstand,BenStrNatOpp,Manning,bovenwaterstand,benedenwaterstand
 
@@ -171,7 +181,7 @@ def InvoerBox():
 # ===================================
 st.markdown("<h1 style='text-align: right; color: black; font-size:10px;'>Geproduceerd door: Niels van der Maaden</h1>", unsafe_allow_html=True)
 #st.write('Geproduceerd door: Niels van der Maaden')
-st.image(Image.open('WRIJ_Sweco.jpg'))
+st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/WRIJ_Sweco.jpg'))
 st.markdown('##')
 st.title('Duiker tool')
 #st.markdown('##')
@@ -190,6 +200,3 @@ with st.container():
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.Opstuwing(),2)} [m]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.Ruw(),3)}</h1>", unsafe_allow_html=True)
     
-    
-
-
