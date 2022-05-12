@@ -108,7 +108,7 @@ def InvoerBox():
                                           options = ('Ja','Nee'), index=1,
                                           key = 'PerOndergrond')
         if KeuzePerOndergrond == 'Ja':
-            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DiaDuiker.jpg'),
+            st.image(Image.open('DiaDuiker.jpg'),
                      caption='Dia Duiker')
         PerOndergrond = st.number_input(label='Percentage ondergronds',format="%.2f",
                         value= 0.10, min_value=0.00, max_value=diameter)
@@ -120,7 +120,7 @@ def InvoerBox():
         if Keuzeweerstand == 'Ja':
             st.write('Gebuik onderstaand figuur voor het bepalen van de intreedweerstand')
             st.write('Standaardwaarde intreedweerstand = 0.4')
-            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/EiWaardes.jpg'),
+            st.image(Image.open('EiWaardes.jpg'),
                      caption='Ei-waarden')
             st.write('Standaardwaarde uitreedweerstand = 1.0')
         intreedweerstand = st.number_input(label='Intreedweerstand [dimensieloos]',
@@ -144,7 +144,7 @@ def InvoerBox():
         if KeuzeManning == 'Ja':
             st.write('Hydraulische weerstand wordt in Manning uitgedrukt')
             st.write('Gebuik onderstaand tabel voor het bepalen van de hydraulische weerstand')
-            st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg'),
+            st.image(Image.open('kWaardem.jpg'),
                      caption='k-Waardem')
         Manning = st.number_input(label='Manning [s∙m ^-1/3]',format="%.2f",
                 value= 75.00)
@@ -171,7 +171,7 @@ def InvoerBox():
 # ===================================
 st.markdown("<h1 style='text-align: right; color: black; font-size:10px;'>Geproduceerd door: Niels van der Maaden</h1>", unsafe_allow_html=True)
 #st.write('Geproduceerd door: Niels van der Maaden')
-st.image(Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/WRIJ_Sweco.jpg'))
+st.image(Image.open('WRIJ_Sweco.jpg'))
 st.markdown('##')
 st.title('Duiker tool')
 #st.markdown('##')
