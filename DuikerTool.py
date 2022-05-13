@@ -87,7 +87,7 @@ class DuikerTool:
         return stroomsnelheid
 
 # =============================================================================
-# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220511.py
+# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220513.py
 # =============================================================================
 
 ## GUI
@@ -103,11 +103,8 @@ def InvoerBox():
     lengte = st.number_input(label='Lengte [meter]',format="%.2f",
                     value=21.00, min_value=0.10, max_value=999.00)
     # Percentage ondergronds
-    with st.expander("Percentage ondergronds"):
-        KeuzePerOndergrond1 = st.selectbox('Keuze: wilt u hulp?', 
-                                          options = ('Ja','Nee'), index=1,
-                                          key = 'PerOndergrond1')
-        if KeuzePerOndergrond1 == 'Ja':
+    with st.expander('Percentage ondergronds'):
+        if st.checkbox('Hulp', value=False, key='Percentage ondergronds'):
             st.image(Image.open('DiaDuiker.jpg'),
                      caption='Dia Duiker')
         KeuzePerOndergrond2 = st.selectbox('Keuze: cm sliblaag in duiker of percentage ondergronds?', 
@@ -118,15 +115,12 @@ def InvoerBox():
                             value= 0, min_value=0, max_value=100)
             PerOndergrond = PerOndergrond1/100
         elif KeuzePerOndergrond2 == 'cm sliblaag':
-            cmOndergrond = st.number_input(label='cm sliblaag [cm]',format="%.2f",
-                            value= 0.05, min_value=0.00, max_value=diameter)
+            cmOndergrond = st.number_input(label='cm sliblaag [cm]',
+                            value= 5, min_value=0, max_value=diameter)
             PerOndergrond = cmOndergrond/diameter
     # Intreedweerstand
     with st.expander("In- en uitreedweerstand"):
-        Keuzeweerstand = st.selectbox('Keuze: wilt u hulp?', 
-                                          options = ('Ja','Nee'), index=1,
-                                          key = 'weerstand')
-        if Keuzeweerstand == 'Ja':
+        if st.checkbox('Hulp', value=False, key='intreedweerstand'):
             st.write('Gebuik onderstaand figuur voor het bepalen van de intreedweerstand')
             st.write('Standaardwaarde intreedweerstand = 0.4')
             st.image(Image.open('EiWaardes.jpg'),
@@ -137,30 +131,25 @@ def InvoerBox():
         uittreedweerstand = st.number_input(label='Uittreedweerstand [dimensieloos]',
                                             format="%.2f",value = 1.00) 
     # Natte oppervlak benedenstrooms
-    with st.expander("Hulp natte oppervlak benedenstrooms"):
-        KeuzeBenStrNatOpp = st.selectbox('Keuze: wilt u hulp?', 
-                                          options = ('Ja','Nee'), index=1,
-                                          key = 'BenStrNatOpp')
-        if KeuzeBenStrNatOpp == 'Ja':
+    with st.expander("Natte oppervlak benedenstrooms"):
+        if st.checkbox('Hulp', value=False, key='BenStrNatOpp'):
             st.write('Schat natte oppervlak O.B.V.profiel watergang en peil')
         BenStrNatOpp = st.number_input(label='Natte oppervlak benedenstrooms',
                         format="%.2f", value= 5.00)
     # Manning
     with st.expander("Hydraulische weerstand"):
-        KeuzeManning = st.selectbox('Keuze: wilt u hulp?', 
-                                          options = ('Ja','Nee'), index=1,
-                                          key = 'Manning')
-        if KeuzeManning == 'Ja':
+        if st.checkbox('Hulp', value=False, key='Hydraulische weerstand'):
             st.write('Hydraulische weerstand wordt in Manning uitgedrukt')
             st.write('Gebuik onderstaand tabel voor het bepalen van de hydraulische weerstand')
             st.image(Image.open('kWaardem.jpg'),
                      caption='k-Waardem')
         Manning = st.number_input(label='Manning [s∙m ^-1/3]',
                 value= 75)
-    with st.expander("Verhang over duiker"):
-        KeuzeVerhang = st.selectbox('Keuze: verhang of hoogte in +mNAP', 
-                                    options = ('Verval','Werkelijke hoogte in +mNAP'))
-        if KeuzeVerhang == 'Verval':
+    with st.expander("Verval over duiker"):
+        KeuzeVerval = st.selectbox('Keuze: Verval of hoogte in +mNAP', 
+                                    options = ('Verval','Werkelijke hoogte in +mNAP'),
+                                    index=0)
+        if KeuzeVerval == 'Verval':
             # Verval
             verval_cm = st.number_input(label='Verval [cm]',format="%.1f",
                             value= 5.00)
@@ -168,13 +157,13 @@ def InvoerBox():
             # Boven- en benedenwaterstand
             benedenwaterstand = 0
             bovenwaterstand = verval
-        elif KeuzeVerhang == 'Werkelijke hoogte in +mNAP':
+        elif KeuzeVerval == 'Werkelijke hoogte in +mNAP':
             # Bovenwaterstand
             bovenwaterstand = st.number_input(label='Bovenwaterstand [+mNAP]',format="%.2f",
                             value= 0.05)
             # Benedenwaterstand
             benedenwaterstand = st.number_input(label='Benedenwaterstand [+mNAP]',format="%.2f",
-                            value= 0.00, min_value=0.00, max_value=bovenwaterstand)          
+                            value= 0.00, min_value=0.00, max_value=bovenwaterstand)             
     return diameter,lengte,PerOndergrond,intreedweerstand,uittreedweerstand,BenStrNatOpp,Manning,bovenwaterstand,benedenwaterstand
 
 ## Layout:
@@ -199,4 +188,3 @@ with st.container():
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.Opstuwing(),2)} [m]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.Ruw(),3)}</h1>", unsafe_allow_html=True)
-    
