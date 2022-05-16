@@ -174,7 +174,7 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
                        Bovenwaterstand, Diameter, Benedenwaterstand,
                        Verval, Lengte, Sliblaag):
     # get an image
-    with Image.open("C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DuikerSchematisch_V1.jpg").convert("RGBA") as base:
+    with Image.open("DuikerSchematisch_V1.jpg").convert("RGBA") as base:
     
         # make a blank image for the text, initialized to transparent text color
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
