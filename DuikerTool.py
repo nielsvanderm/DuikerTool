@@ -9,7 +9,8 @@ Duikertool
 
 import math
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
+import io
 
 ## Algemene configuratie streamlit:
 # ===================================
@@ -87,12 +88,12 @@ class DuikerTool:
         return stroomsnelheid
 
 # =============================================================================
-# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220513.py
+# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220516.py
 # =============================================================================
 
 ## GUI
 # =============================================================================
-
+   
 ## Input:
 # ===================================
 def InvoerBox():
@@ -116,7 +117,7 @@ def InvoerBox():
             PerOndergrond = PerOndergrond1/100
         elif KeuzePerOndergrond2 == 'cm sliblaag':
             cmOndergrond = st.number_input(label='cm sliblaag [cm]',
-                            value= 5, min_value=0, max_value=diameter)
+                            value= 5, min_value=0, max_value=int((diameter*100)))
             PerOndergrond = cmOndergrond/diameter
     # Intreedweerstand
     with st.expander("In- en uitreedweerstand"):
@@ -164,7 +165,40 @@ def InvoerBox():
             # Benedenwaterstand
             benedenwaterstand = st.number_input(label='Benedenwaterstand [+mNAP]',format="%.2f",
                             value= 0.00, min_value=0.00, max_value=bovenwaterstand)             
+    
     return diameter,lengte,PerOndergrond,intreedweerstand,uittreedweerstand,BenStrNatOpp,Manning,bovenwaterstand,benedenwaterstand
+
+## Visualisatie:
+# ===================================
+def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
+                       Bovenwaterstand, Diameter, Benedenwaterstand,
+                       Verval, Lengte, Sliblaag):
+    # get an image
+    with Image.open("DuikerSchematisch_V1.jpg").convert("RGBA") as base:
+    
+        # make a blank image for the text, initialized to transparent text color
+        txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
+    
+        # get a font
+        fnt = ImageFont.load_default()
+        # get a drawing context
+        d = ImageDraw.Draw(txt)
+    
+        # draw text, half opacity
+        d.text((425, 17),  f'{Intreedweerstand}', font=fnt, fill=(0,0,0,1000))  # Intreedweerstand
+        d.text((595, 17),  f'{Manning}', font=fnt, fill=(0,0,0,1000))           # Manning
+        d.text((870, 17),  f'{Uittreedweerstand}', font=fnt, fill=(0,0,0,1000)) # Uittreedweerstand
+        d.text((220, 156), f'{Bovenwaterstand}', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
+        d.text((715, 226), f'{Diameter} [m]', font=fnt, fill=(0,0,0,1000))         # Diameter
+        d.text((975, 240), f'{Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))# Benedenwaterstand
+        d.text((462, 268), f'{Verval} [cm]', font=fnt, fill=(0,0,0,1000))           # Verval Duiker
+        d.text((608, 328), f'{Lengte} [m]', font=fnt, fill=(0,0,0,1000))           # Lengte duiker
+        d.text((980, 282), f'{Sliblaag} [cm]', font=fnt, fill=(0,0,0,1000))         # Sliblaag
+           
+        out = Image.alpha_composite(base, txt)
+        buff = io.BytesIO()
+        out.save(buff, format='PNG')
+        return buff
 
 ## Layout:
 # ===================================
@@ -182,9 +216,16 @@ with st.sidebar:
                         invoer[6], invoer[7], invoer[8])
 ## Output:
 # ===================================    
-with st.container():   
+with st.container():
+    st.image(Image.open(DuikerVisualisatie(invoer[3], invoer[6], invoer[4],
+                                           invoer[7], invoer[0], invoer[8],
+                                           invoer[7], invoer[1], invoer[2])))
     st.markdown("<h1 style='text-align: left; color: black; font-size:30px;'>Resultaten</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.Debiet(),3)} [m3/s]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.Opstuwing(),2)} [m]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.Ruw(),3)}</h1>", unsafe_allow_html=True)
+
+
+#Image.open(DuikerVisualisatie(1,2,3,4,5,6,7,8,9))
+#Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg')
