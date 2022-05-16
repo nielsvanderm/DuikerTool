@@ -174,7 +174,7 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
                        Bovenwaterstand, Diameter, Benedenwaterstand,
                        Verval, Lengte, Sliblaag):
     # get an image
-    with Image.open("DuikerSchematisch_V1.jpg").convert("RGBA") as base:
+    with Image.open("C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/DuikerSchematisch_V1.jpg").convert("RGBA") as base:
     
         # make a blank image for the text, initialized to transparent text color
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
@@ -185,15 +185,15 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
         d = ImageDraw.Draw(txt)
     
         # draw text, half opacity
-        d.text((425, 17),  f'{Intreedweerstand}', font=fnt, fill=(0,0,0,1000))  # Intreedweerstand
-        d.text((595, 17),  f'{Manning}', font=fnt, fill=(0,0,0,1000))           # Manning
-        d.text((870, 17),  f'{Uittreedweerstand}', font=fnt, fill=(0,0,0,1000)) # Uittreedweerstand
-        d.text((220, 156), f'{Bovenwaterstand}', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
-        d.text((715, 226), f'{Diameter} [m]', font=fnt, fill=(0,0,0,1000))         # Diameter
-        d.text((975, 240), f'{Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))# Benedenwaterstand
-        d.text((462, 268), f'{Verval} [cm]', font=fnt, fill=(0,0,0,1000))           # Verval Duiker
-        d.text((608, 328), f'{Lengte} [m]', font=fnt, fill=(0,0,0,1000))           # Lengte duiker
-        d.text((980, 282), f'{Sliblaag} [cm]', font=fnt, fill=(0,0,0,1000))         # Sliblaag
+        d.text((325, 17),  f'Intreedweerstand: {Intreedweerstand}', font=fnt, fill=(0,0,0,1000))  # Intreedweerstand
+        d.text((520, 17),  f'Manning: {Manning}', font=fnt, fill=(0,0,0,1000))           # Manning
+        d.text((760, 17),  f'Uittreedweerstand: {Uittreedweerstand}', font=fnt, fill=(0,0,0,1000)) # Uittreedweerstand
+        d.text((190, 156), f'Bovenwaterstand: {Bovenwaterstand}', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
+        d.text((615, 226), f'Diameter: {Diameter} [m]', font=fnt, fill=(0,0,0,1000))         # Diameter
+        d.text((850, 240), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))# Benedenwaterstand
+        d.text((380, 268), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))           # Verval Duiker
+        d.text((580, 328), f'Lengte: {Lengte} [m]', font=fnt, fill=(0,0,0,1000))           # Lengte duiker
+        d.text((920, 282), f'Sliblaag: {Sliblaag} [cm]', font=fnt, fill=(0,0,0,1000))         # Sliblaag
            
         out = Image.alpha_composite(base, txt)
         buff = io.BytesIO()
