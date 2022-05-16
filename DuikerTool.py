@@ -48,11 +48,8 @@ class DuikerTool:
         r = self.diameter/2                             # Straal
         d = r - (self.diameter * self.PerOndergrond)    # Afstand midden tot koorde 
         k = 2 * (r**2 - d**2)**0.5                      # Koorde 
-        if d < 0:
-            return print('D is kleiner dan 0!')
-        else:
-            opp = r**2 *  math.asin((k/2)/r) - (0.5 * k * d) # Oppervlak onder de grond
-            return opp
+        opp = r**2 *  math.asin((k/2)/r) - (0.5 * k * d) # Oppervlak onder de grond
+        return opp
    
     ## Hydraulische ruwheid:
     # ===================================
@@ -117,8 +114,8 @@ def InvoerBox():
             PerOndergrond = PerOndergrond1/100
         elif KeuzePerOndergrond2 == 'cm sliblaag':
             cmOndergrond = st.number_input(label='cm sliblaag [cm]',
-                            value= 5, min_value=0, max_value=int((diameter*100)))
-            PerOndergrond = cmOndergrond/diameter
+                            value= 0, min_value=0, max_value= int(diameter*100))
+            PerOndergrond = float((cmOndergrond/100) / diameter)
     # Intreedweerstand
     with st.expander("In- en uitreedweerstand"):
         if st.checkbox('Hulp', value=False, key='intreedweerstand'):
