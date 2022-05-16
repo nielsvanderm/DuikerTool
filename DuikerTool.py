@@ -188,7 +188,7 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
         d.text((325, 17),  f'Intreedweerstand: {Intreedweerstand}', font=fnt, fill=(0,0,0,1000))  # Intreedweerstand
         d.text((520, 17),  f'Manning: {Manning}', font=fnt, fill=(0,0,0,1000))           # Manning
         d.text((760, 17),  f'Uittreedweerstand: {Uittreedweerstand}', font=fnt, fill=(0,0,0,1000)) # Uittreedweerstand
-        d.text((190, 156), f'Bovenwaterstand: {Bovenwaterstand}', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
+        d.text((120, 156), f'Bovenwaterstand: {Bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
         d.text((615, 226), f'Diameter: {Diameter} [m]', font=fnt, fill=(0,0,0,1000))         # Diameter
         d.text((850, 240), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))# Benedenwaterstand
         d.text((380, 268), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))           # Verval Duiker
@@ -225,7 +225,3 @@ with st.container():
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.Opstuwing(),2)} [m]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.Ruw(),3)}</h1>", unsafe_allow_html=True)
-
-
-#Image.open(DuikerVisualisatie(1,2,3,4,5,6,7,8,9))
-#Image.open('C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/kWaardem.jpg')
