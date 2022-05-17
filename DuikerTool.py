@@ -173,8 +173,7 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
     
         # get a font
-        fnt = ImageFont.truetype(font='RalewayBlack.TTF', size=20, index=0, encoding='', layout_engine=None)
-
+        fnt = ImageFont.truetype(font='AllerBd.TTF', size=15, index=0, encoding='', layout_engine=None)
         # get a drawing context
         d = ImageDraw.Draw(txt)
     
@@ -190,12 +189,12 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
         d.text((670, 17),  f'Manning: {Manning}', font=fnt, fill=(0,0,0,1000))                                  # Manning
         if KeuzeVerval == 'Verval':
             d.text((210, 200), 'Bovenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))                          # Bovenwaterstand
-            d.text((1120, 180), 'Benedenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))                        # Benedenwaterstand
-            d.text((1060, 300), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))                           # Verval Duiker
+            d.text((1060, 300), 'Benedenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))                        # Benedenwaterstand
+            d.text((1120, 180), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))                           # Verval Duiker
         elif KeuzeVerval == 'Werkelijke hoogte in +mNAP':
             d.text((210, 200), f'Bovenwaterstand: {Bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))      # Bovenwaterstand
-            d.text((1120, 180), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  # Benedenwaterstand
-            d.text((1060, 300), 'Verval: N.V.T', font=fnt, fill=(0,0,0,1000))                                    # Verval Duiker
+            d.text((1060, 300), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  # Benedenwaterstand
+            d.text((1120, 180), 'Verval: N.V.T', font=fnt, fill=(0,0,0,1000))                                    # Verval Duiker
             
         out = Image.alpha_composite(base, txt)
         buff = io.BytesIO()
