@@ -173,7 +173,7 @@ def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
     
         # get a font
-        fnt = ImageFont.truetype("arial.ttf", 15)
+        fnt = ImageFont.load_default()
         # get a drawing context
         d = ImageDraw.Draw(txt)
     
