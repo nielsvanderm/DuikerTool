@@ -83,14 +83,7 @@ class DuikerTool:
         NatOppDuiker = ((self.diameter/2)**2 * 3.14) - DuikerTool.Opp(self) # Natte oppervlak duiker
         stroomsnelheid = DuikerTool.Debiet(self)/NatOppDuiker               # Stroomsnelheid in duiker
         return stroomsnelheid
-
-# =============================================================================
-# streamlit run C:/Users/NLNIEM/Desktop/Werk/3_Python/1_DuikerTool/Duikertool_V1_20220516.py
-# =============================================================================
-
-## GUI
-# =============================================================================
-   
+  
 ## Input:
 # ===================================
 def InvoerBox():
@@ -100,7 +93,7 @@ def InvoerBox():
     # Lengte
     lengte = st.number_input(label='Lengte [meter]',format="%.2f",
                     value=21.00, min_value=0.10, max_value=999.00)
-    # Percentage ondergronds
+    # Percentage ondergronds    
     with st.expander('Percentage ondergronds'):
         if st.checkbox('Hulp', value=False, key='Percentage ondergronds'):
             st.image(Image.open('DiaDuiker.jpg'),
@@ -110,7 +103,7 @@ def InvoerBox():
                                           index=1, key = 'PerOndergrond2')
         if KeuzePerOndergrond2 == 'Percentage ondergronds':
             PerOndergrond1 = st.number_input(label='Percentage ondergronds [%]',
-                            value= 0, min_value=0, max_value=100)
+                            value= 10, min_value=0, max_value=100)
             PerOndergrond = PerOndergrond1/100
         elif KeuzePerOndergrond2 == 'cm sliblaag':
             cmOndergrond = st.number_input(label='cm sliblaag [cm]',
@@ -163,40 +156,51 @@ def InvoerBox():
             benedenwaterstand = st.number_input(label='Benedenwaterstand [+mNAP]',format="%.2f",
                             value= 0.00, min_value=0.00, max_value=bovenwaterstand)             
     
-    return diameter,lengte,PerOndergrond,intreedweerstand,uittreedweerstand,BenStrNatOpp,Manning,bovenwaterstand,benedenwaterstand
+    return (diameter, lengte, PerOndergrond, intreedweerstand, uittreedweerstand,
+            BenStrNatOpp, Manning, bovenwaterstand, benedenwaterstand,
+            KeuzePerOndergrond2, KeuzeVerval)
 
 ## Visualisatie:
 # ===================================
 def DuikerVisualisatie(Intreedweerstand, Manning, Uittreedweerstand,
                        Bovenwaterstand, Diameter, Benedenwaterstand,
-                       Verval, Lengte, Sliblaag):
+                       Verval, Lengte, Sliblaag, KeuzePerOndergrond2, 
+                       KeuzeVerval):
     # get an image
-    with Image.open("DuikerSchematisch_V1.jpg").convert("RGBA") as base:
+    with Image.open("DuikerSchematisch_V2.jpg").convert("RGBA") as base:
     
         # make a blank image for the text, initialized to transparent text color
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
     
         # get a font
-        fnt = ImageFont.load_default()
+        fnt = ImageFont.truetype("arial.ttf", 15)
         # get a drawing context
         d = ImageDraw.Draw(txt)
     
         # draw text, half opacity
-        d.text((325, 17),  f'Intreedweerstand: {Intreedweerstand}', font=fnt, fill=(0,0,0,1000))  # Intreedweerstand
-        d.text((520, 17),  f'Manning: {Manning}', font=fnt, fill=(0,0,0,1000))           # Manning
-        d.text((760, 17),  f'Uittreedweerstand: {Uittreedweerstand}', font=fnt, fill=(0,0,0,1000)) # Uittreedweerstand
-        d.text((120, 156), f'Bovenwaterstand: {Bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  # Bovenwaterstand
-        d.text((615, 226), f'Diameter: {Diameter} [m]', font=fnt, fill=(0,0,0,1000))         # Diameter
-        d.text((850, 240), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))# Benedenwaterstand
-        d.text((380, 268), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))           # Verval Duiker
-        d.text((580, 328), f'Lengte: {Lengte} [m]', font=fnt, fill=(0,0,0,1000))           # Lengte duiker
-        d.text((920, 282), f'Sliblaag: {Sliblaag} [cm]', font=fnt, fill=(0,0,0,1000))         # Sliblaag
-           
+        d.text((760, 280), f'Diameter: {Diameter} [m]', font=fnt, fill=(0,0,0,1000))                            # Diameter
+        d.text((650, 360), f'Lengte: {Lengte} [m]', font=fnt, fill=(0,0,0,1000))                                # Lengte duiker
+        if KeuzePerOndergrond2 == 'Percentage ondergronds':
+            d.text((1150, 345), f'Sliblaag: {Sliblaag} [%]', font=fnt, fill=(0,0,0,1000))                        # Sliblaag
+        elif KeuzePerOndergrond2 == 'cm sliblaag':
+            d.text((1150, 345), f'Sliblaag: {Sliblaag} [cm]', font=fnt, fill=(0,0,0,1000))                       # Sliblaag
+        d.text((400, 17),  f'Intreedweerstand: {Intreedweerstand}', font=fnt, fill=(0,0,0,1000))                # Intreedweerstand
+        d.text((950, 17),  f'Uittreedweerstand: {Uittreedweerstand}', font=fnt, fill=(0,0,0,1000))              # Uittreedweerstand
+        d.text((670, 17),  f'Manning: {Manning}', font=fnt, fill=(0,0,0,1000))                                  # Manning
+        if KeuzeVerval == 'Verval':
+            d.text((210, 200), 'Bovenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))                          # Bovenwaterstand
+            d.text((1120, 180), 'Benedenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))                        # Benedenwaterstand
+            d.text((1060, 300), f'Verval: {Verval} [cm]', font=fnt, fill=(0,0,0,1000))                           # Verval Duiker
+        elif KeuzeVerval == 'Werkelijke hoogte in +mNAP':
+            d.text((210, 200), f'Bovenwaterstand: {Bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))      # Bovenwaterstand
+            d.text((1120, 180), f'Benedenwaterstand: {Benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  # Benedenwaterstand
+            d.text((1060, 300), 'Verval: N.V.T', font=fnt, fill=(0,0,0,1000))                                    # Verval Duiker
+            
         out = Image.alpha_composite(base, txt)
         buff = io.BytesIO()
         out.save(buff, format='PNG')
         return buff
-
+      
 ## Layout:
 # ===================================
 st.markdown("<h1 style='text-align: right; color: black; font-size:10px;'>Geproduceerd door: Niels van der Maaden</h1>", unsafe_allow_html=True)
@@ -216,7 +220,8 @@ with st.sidebar:
 with st.container():
     st.image(Image.open(DuikerVisualisatie(invoer[3], invoer[6], invoer[4],
                                            invoer[7], invoer[0], invoer[8],
-                                           invoer[7], invoer[1], invoer[2])))
+                                           invoer[7], invoer[1], invoer[2], 
+                                           invoer[9], invoer[10])))
     st.markdown("<h1 style='text-align: left; color: black; font-size:30px;'>Resultaten</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.Debiet(),3)} [m3/s]</h1>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.Stroomsnelheid(),2)} [m/s]</h1>", unsafe_allow_html=True)
