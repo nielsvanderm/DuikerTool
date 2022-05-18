@@ -141,7 +141,7 @@ def invoer_sidebar():
     keuze_verval = 'Verval'
     
     # percentage ondergronds
-    with st.expander('percentage ondergronds'):
+    with st.expander('Sliblaag/gedeelte ondergrond'):
         if st.checkbox('Hulp', value=False, key='Sliblaag/gedeelte ondergrond'):
             st.image(Image.open('DiaDuiker.jpg'),
                      caption='Dia Duiker')
