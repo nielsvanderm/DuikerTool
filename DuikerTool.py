@@ -142,7 +142,7 @@ def invoer_sidebar():
     
     # percentage ondergronds
     with st.expander('percentage ondergronds'):
-        if st.checkbox('Hulp', value=False, key='percentage ondergronds'):
+        if st.checkbox('Hulp', value=False, key='Sliblaag/gedeelte ondergrond'):
             st.image(Image.open('DiaDuiker.jpg'),
                      caption='Dia Duiker')
         keuze_sliblaag = st.selectbox('Keuze: sliblaag in cm of percentage T.O.V. duiker?',
