@@ -132,13 +132,8 @@ def invoer_sidebar():
     benedenwaterstand = 0
     verval = 0.05
     sliblaag_cm = 5
-    sliblaag_procent = 10
+    sliblaag_procent = 0.10
     keuze_sliblaag = 'cm sliblaag'
-    intreedweerstand = 0.40
-    uittreedweerstand = 0.40
-    manning = 75.0
-    ben_str_nat_opp = 5.0
-    keuze_verval = 'Verval'
     
     # percentage ondergronds
     with st.expander('Sliblaag/gedeelte ondergrond'):
