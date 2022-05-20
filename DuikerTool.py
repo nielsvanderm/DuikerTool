@@ -131,7 +131,7 @@ def invoer_sidebar():
     bovenwaterstand = 0.05  
     benedenwaterstand = 0
     verval = 0.05
-    sliblaag_cm = 0.05
+    sliblaag_cm = 5
     sliblaag_procent = 10
     keuze_sliblaag = 'cm sliblaag'
     intreedweerstand = 0.40
