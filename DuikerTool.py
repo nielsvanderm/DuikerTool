@@ -123,21 +123,28 @@ class Duiker(BaseModel):
 # ===================================
 def invoer_sidebar():
     # Diameter
-    diameter = st.number_input(label='Diameter [meter]', format="%.2f",
-                               value=0.50, min_value=0.10)
+    diameter = st.number_input(label='Diameter [meter]', 
+                               format="%.2f",
+                               step=1.00,
+                               value=0.50,  
+                               min_value=0.10)
     # Lengte
-    lengte = st.number_input(label='Lengte [meter]', format="%.2f",
-                             value=21.00, min_value=0.10, max_value=999.00)
-    bovenwaterstand = 0.05  
-    benedenwaterstand = 0
-    verval = 0.05
-    sliblaag_cm = 5
-    sliblaag_procent = 0.10
-    keuze_sliblaag = 'cm sliblaag'
+    lengte = st.number_input(label='Lengte [meter]', 
+                             format="%.2f",
+                             step=1.00,
+                             value=21.00, 
+                             min_value=0.10, 
+                             max_value=999.00)
     
+    bovenwaterstand=0.05  
+    benedenwaterstand=0
+    verval=0.05
+    sliblaag_cm=5
+    sliblaag_procent=0.1
+   
     # percentage ondergronds
-    with st.expander('Sliblaag/gedeelte ondergrond'):
-        if st.checkbox('Hulp', value=False, key='Sliblaag/gedeelte ondergrond'):
+    with st.expander('percentage ondergronds'):
+        if st.checkbox('Hulp', value=False, key='percentage ondergronds'):
             st.image(Image.open('DiaDuiker.jpg'),
                      caption='Dia Duiker')
         keuze_sliblaag = st.selectbox('Keuze: sliblaag in cm of percentage T.O.V. duiker?',
@@ -146,12 +153,14 @@ def invoer_sidebar():
                                              key='keuze_sliblaag')
         if keuze_sliblaag == 'percentage T.O.V. duiker':
             sliblaag_procent1 = st.number_input(label='percentage T.O.V. duiker [%]',
+                                              step = 10,
                                               value=0,
                                               min_value=0,
                                               max_value=100)
             sliblaag_procent = sliblaag_procent1 / 100
         elif keuze_sliblaag == 'cm sliblaag':
             sliblaag_cm1 = st.number_input(label='cm sliblaag [cm]',
+                                            step=1,
                                             value=5,
                                             min_value=0,
                                             max_value=int((diameter * 100)))
@@ -194,16 +203,19 @@ def invoer_sidebar():
             # Verval
             verval_cm = st.number_input(label='Verval [cm]',
                                         format="%.1f",
+                                        step=1.00,
                                         value=5.00)
             verval = verval_cm / 100
         elif keuze_verval == 'Werkelijke hoogte in +mNAP':
             # Bovenwaterstand
             bovenwaterstand = st.number_input(label='Bovenwaterstand [+mNAP]',
                                               format="%.2f",
+                                              #step=0.10,
                                               value=0.05)
             # Benedenwaterstand
             benedenwaterstand = st.number_input(label='Benedenwaterstand [+mNAP]',
                                                 format="%.2f",
+                                                #step=0.10,
                                                 value=0.00,
                                                 min_value=0.00,
                                                 max_value=bovenwaterstand)
@@ -220,6 +232,8 @@ def invoer_sidebar():
                 benedenwaterstand=benedenwaterstand,
                 keuze_sliblaag=keuze_sliblaag,
                 keuze_verval=keuze_verval)
+
+
 
 ## Visualisatie:
 # ===================================
@@ -274,7 +288,7 @@ def duiker_visualisatie(diameter: float,
             d.text((1120, 180), f'Verval: {verval} [cm]', font=fnt, fill=(0,0,0,1000))                           
         elif keuze_verval == 'Werkelijke hoogte in +mNAP':
             # Bovenwaterstand
-            d.text((150, 200), f'Bovenwaterstand: {bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))      
+            d.text((210, 200), f'Bovenwaterstand: {bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))      
             # Benedenwaterstand
             d.text((1060, 300), f'Benedenwaterstand: {benedenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))  
             # Verval Duiker
@@ -292,6 +306,7 @@ st.markdown("<h1 style='text-align: right; color: black; font-size:10px;'>Geprod
 st.image(Image.open('WRIJ_Sweco.jpg'))
 st.markdown('##')
 st.title('Duiker tool')
+#st.markdown('##')
 
 with st.sidebar:
     invoer = invoer_sidebar()
