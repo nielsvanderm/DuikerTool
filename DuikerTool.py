@@ -288,7 +288,7 @@ def duiker_visualisatie(diameter: float,
             # Benedenwaterstand              
             d.text((1060, 300), 'Benedenwaterstand: N.V.T.', font=fnt, fill=(0,0,0,1000))
             # Verval Duiker
-            d.text((1120, 180), f'Verval: {verval} [cm]', font=fnt, fill=(0,0,0,1000))                           
+            d.text((1120, 180), f'Verval: {verval*100} [cm]', font=fnt, fill=(0,0,0,1000))                           
         elif keuze_verval == 'Werkelijke hoogte in +mNAP':
             # Bovenwaterstand
             d.text((110, 200), f'Bovenwaterstand: {bovenwaterstand} [+mNAP]', font=fnt, fill=(0,0,0,1000))      
