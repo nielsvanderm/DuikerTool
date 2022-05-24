@@ -206,7 +206,7 @@ def invoer_sidebar():
                                         step=1.00,
                                         value=5.00)
             verval = verval_cm/100
-            bovenwaterstand=verval*100
+            bovenwaterstand=verval
             benedenwaterstand=0
             
         elif keuze_verval == 'Werkelijke hoogte in +mNAP':
