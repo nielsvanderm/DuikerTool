@@ -205,7 +205,7 @@ def invoer_sidebar():
                                         format="%.1f",
                                         step=1.00,
                                         value=5.00)
-            verval = verval_cm / 100
+            verval = verval_cm
             bovenwaterstand=verval
             benedenwaterstand=0
             
