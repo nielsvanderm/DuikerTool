@@ -317,12 +317,23 @@ with st.sidebar:
     
 ## Output:
 # ===================================    
-with st.container():
+wwith st.container():
     st.image(Image.open(duiker_visualisatie(**invoer)))
     st.plotly_chart(duiker.plotly_figure())
     st.markdown("<h1 style='text-align: left; color: black; font-size:30px;'>Resultaten</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.debiet,3)} [m3/s]</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.stroomsnelheid,2)} [m/s]</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.opstuwing,2)} [m]</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.ruwheid,3)}</h1>", unsafe_allow_html=True)
-    
+    keuze_eenheid = st.selectbox(label='Eenheid', options = ['m3/h', 'm3/s', 'l/s'])
+    if keuze_eenheid == 'm3/h':
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.debiet * 60 * 60,3)} [m3/h]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.stroomsnelheid *60 *60,2)} [m/h]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.opstuwing,2)} [m]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.ruwheid,3)}</h1>", unsafe_allow_html=True)
+    elif keuze_eenheid == 'm3/s':
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.debiet,3)} [m3/s]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.stroomsnelheid,2)} [m/s]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.opstuwing,2)} [m]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.ruwheid,3)}</h1>", unsafe_allow_html=True)
+    elif keuze_eenheid == 'l/s':
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Debiet: {round(duiker.debiet*1000,3)} [l/s]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Stroomsnelheid: {round(duiker.stroomsnelheid,2)} [m/s]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Opstuwing: {round(duiker.opstuwing,2)} [m]</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: left; color: black; font-size:20px;'>Hydraulische ruwheid: {round(duiker.ruwheid,3)}</h1>", unsafe_allow_html=True)
