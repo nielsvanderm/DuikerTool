@@ -317,7 +317,7 @@ with st.sidebar:
     
 ## Output:
 # ===================================    
-wwith st.container():
+with st.container():
     st.image(Image.open(duiker_visualisatie(**invoer)))
     st.plotly_chart(duiker.plotly_figure())
     st.markdown("<h1 style='text-align: left; color: black; font-size:30px;'>Resultaten</h1>", unsafe_allow_html=True)
